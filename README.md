@@ -8,12 +8,20 @@ A Framer.JS and Framer Studio library of standard Google Material Design interac
 
 Defines material design animations/interactions
 
+#### Supported interactions
+- ripple effect
+- raise / lower card
+- expand card
+- animate in from centre of layer
+- move layer
 
 ### materialComponents.coffee
 
 Defines material design components.
 Remember, you can import components from Sketch as well. The main reason for defining them in this module instead is if you want to parametrise some of their properties
 
+#### Supported components
+- Floating Action Button (FAB)
 
 ### colors.coffee
 
