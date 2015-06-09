@@ -20,6 +20,9 @@ background = new Layer
 	backgroundColor: materialColors.screenBackground
 	width: Framer.Device.screen.width / Framer.Device.contentScale
 	height: Framer.Device.screen.height / Framer.Device.contentScale
+	
+# screen edge margin
+screenEdgeMaring = 16
 
 
 
@@ -83,29 +86,40 @@ card3 = new Layer
 	shadowSpread: cardShadowSpread
 	superLayer: background
 	
-card4 = new Layer
-	backgroundColor: cardBackgroundColor
-	width: background.width * 0.6
-	height: background.height * 0.3
-	midX: background.midX
-	y: card3.maxY + (cardSpacer*3)
-	borderRadius: cardBorderRadius
-	shadowX: cardShadowX
-	shadowY: cardShadowY
-	shadowColor: cardShadowColor
-	shadowBlur: cardShadowBlur
-	shadowSpread: cardShadowSpread
-	superLayer: background
-
-
 # the fab with a Plus sign is added to the bottom card and hidden initially
 fab = materialComponents.fab(background, materialColors.seekPink, "+", 0, 0)
+
+# This is a card whose size we want to change, but also want to be able to revert back 
+# to it's original dimensions
+card4 = materialComponents.card(
+	background,						# superLayer 
+	cardBackgroundColor, 			# card color
+	card3.x,						# x
+	card3.maxY + (cardSpacer*3),	# y
+	background.width * 0.6,			# width
+	background.height * 0.3,		# height
+	cardBorderRadius,				# borderRadius
+	1,								# opacity
+	1,								# scale
+	cardShadowX,
+	cardShadowY,
+	cardShadowColor,
+	cardShadowBlur,
+	cardShadowSpread
+)
 
 
 # favoriteIcon = resources['favorite']
 # favoriteIcon.superLayer = card4
 # favoriteIcon.maxX = background.maxX - favoriteIcon.width
 # favoriteIcon.minY = background.minY + favoriteIcon.height
+
+closeIcon = resources['close']
+closeIcon.superLayer = background
+closeIcon.maxX = background.maxX - screenEdgeMaring
+closeIcon.minY = background.minY + screenEdgeMaring
+closeIcon.opacity = 0
+
 
 
 
@@ -128,19 +142,43 @@ card3.on Events.Click, (event)->
 	materialInteractions.raiseAndLowerLayer(card3)
 
 
-card4.on Events.Click, (event)->
-	card4.bringToFront()
-	materialInteractions.rippleEffect(event.offsetX, event.offsetY, card4)
-	materialInteractions.raiseLayer(card4)
-	materialInteractions.expandHorizontally(card4, 0.2)
-	materialInteractions.expandVertically(card4, 0.6)
-	fab.bringToFront()
+card4.cardLayer.on Events.Click, (event)->
+	card4.cardLayer.bringToFront()
+	materialInteractions.rippleEffect(event.offsetX, event.offsetY, card4.cardLayer)
+	materialInteractions.raiseLayer(card4.cardLayer)
+	materialInteractions.expandHorizontally(card4.cardLayer, 0.2)
+	materialInteractions.expandVertically(card4.cardLayer, 0.6)
 	materialInteractions.appearFromCentre(fab, 1)
+	materialInteractions.showWithDelay(closeIcon,1)
 
 fab.on Events.Click, (event)->
 	materialInteractions.rotateLayer(fab, 135)
 
+closeIcon.on Events.Click, (event)->
+	materialInteractions.animateIconBounds(closeIcon, materialColors.white)
+	materialInteractions.shrinkVertically(
+		card4.cardLayer,
+		card4.initialY, 
+		card4.initialHeight, 
+		0.2)
+	materialInteractions.shrinkHorizontally(
+		card4.cardLayer,
+		card4.initialX, 
+		card4.initialWidth, 
+		0.6)
+
 
 # --------------------------------------------------------------------------
+
+# TODO before the hackathon
+
+# get ripple effect working on device
+# shrink/close card
+# slide in/out side drawer
+# sequentially load items down the page (e.g. search results on SERP page)
+# bring up menu options from FAB
+# animate from one icon into another (pass two sketch resources icons in)
+# radial expansion of a layer (e.g. skrid from FAB)
+# animate seek logo
 
 

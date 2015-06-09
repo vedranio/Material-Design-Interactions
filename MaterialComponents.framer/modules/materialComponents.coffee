@@ -35,3 +35,47 @@ exports.fab = (superLayer, color, icon, initialOpacity, initialScale) ->
 		y: superLayer.maxY - (diameter + fabExternalPadding)
 
 	return newFab
+
+# ---------------------------------------------------------------------------------------------
+# A simple card, that allows you to specify it's initial geometry (position and size)
+# This is useful, because you can then expand this card AND return it to it's original size
+# by accessing it's initial geometry 
+#
+# TODO: investigate if there is a better way to store the different states of the card object
+#		e.g. using states to store the initial state, instead of having it as properties
+#
+# ---------------------------------------------------------------------------------------------
+exports.card = (superLayer, initialColor, initialX, initialY, initialWidth, initialHeight, initialBorderRadius, initialOpacity, initialScale, shadowX, shadowY, shadowColor, shadowBlur, shadowSpread) ->
+	
+	# create a layer representing the card
+	cardLayer = new Layer
+		backgroundColor: initialColor
+		x: initialX
+		y: initialY
+		width: initialWidth
+		height: initialHeight
+		borderRadius: initialBorderRadius
+		opacity: initialOpacity
+		scale: initialScale
+		superLayer: superLayer
+		shadowX: shadowX
+		shadowY: shadowY
+		shadowColor: shadowColor
+		shadowBlur: shadowBlur
+		shadowSpread: shadowSpread
+		
+
+	# The cardObject consists of the layer (the graphical representation of the card), and also stores it's initial geometry
+	# We want to always remember the initial geometry, in case we need to change it during execution 
+	cardObject =
+		initialX: initialX
+		initialY: initialY
+		initialWidth: initialWidth
+		initialHeight: initialHeight
+		initialBorderRadius: initialBorderRadius
+		initialOpacity: initialOpacity
+		initialScale: initialScale
+		cardLayer: cardLayer
+
+	
+	return cardObject

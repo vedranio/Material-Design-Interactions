@@ -1,4 +1,4 @@
-# This module defines the Material Design animations which are triggered when you interact with 
+	# This module defines the Material Design animations which are triggered when you interact with 
 # a UI component. For example, when you tap/click a card, you see that ripple effect and the card
 # lifts slightly 
 
@@ -78,6 +78,25 @@ exports.expandHorizontally = (layer, animationDelay) ->
 	
 	exandHorizontallyAnimation.start()
 
+# ---------------------------------------------------------------------------------------------
+# Shrink the layer horizontally to it's original size
+# Example use case: collapsing a card previously opened
+# ---------------------------------------------------------------------------------------------
+exports.shrinkHorizontally = (layer, newX, newWidth, animationDelay) ->
+	
+	# define the animations 
+	animation = new Animation
+		layer: layer
+		properties:
+			width: newWidth
+			x: newX
+		delay: animationDelay
+		time: 0.2
+		curve: "ease-in-out"
+
+	
+	animation.start()
+
 
 # ---------------------------------------------------------------------------------------------
 # Expand the layer vertically to the borders of it's container
@@ -97,6 +116,27 @@ exports.expandVertically = (layer, animationDelay) ->
 
 	
 	expandVerticallyAnimation.start()
+
+
+# ---------------------------------------------------------------------------------------------
+# Shrink the layer vertically to it's original size
+# Example use case: collapsing a card previously opened
+# ---------------------------------------------------------------------------------------------
+exports.shrinkVertically = (layer, newY, newHeight, animationDelay) ->
+	
+	# define the animations 
+	animation = new Animation
+		layer: layer
+		properties:
+			height: newHeight
+			y: newY
+		delay: animationDelay
+		time: 0.2
+		curve: "ease-in-out"
+
+	
+	animation.start()
+
 
 # ---------------------------------------------------------------------------------------------
 # Rotate layer
@@ -166,13 +206,12 @@ exports.rippleEffect = (touchX, touchY, layer) ->
 # ---------------------------------------------------------------------------------------------
 # Simulate the material design animation when an icon is tapped
 # ---------------------------------------------------------------------------------------------
-exports.animateIconBounds = (icon) ->
+exports.animateIconBounds = (icon, iconBoundsColor) ->
 
-	
 	iconTapBounds = new Layer
-		backgroundColor: icon.backgroundColor
-		opacity: 1
-		brightness: 115
+		backgroundColor: iconBoundsColor
+		opacity: 0.5
+		brightness: 75
 		width:45
 		height:45
 		borderRadius:45
@@ -181,9 +220,9 @@ exports.animateIconBounds = (icon) ->
 		
 	iconTapBounds.animate
 		properties:
-			opacity: 1
-		curve: "ease-in-out"
-		time: 0.2
+			opacity: 0
+		curve: "ease-out"
+		time: 0.5
 
 	iconTapBounds.on Events.AnimationEnd, ->
 		iconTapBounds.animate
@@ -198,7 +237,9 @@ exports.animateIconBounds = (icon) ->
 # ---------------------------------------------------------------------------------------------
 exports.appearFromCentre = (layer, animationDelay) ->
 
-	appearAnimation = new Animation
+	layer.bringToFront()
+
+	animation = new Animation
 		layer: layer
 		properties:
 			opacity: 1
@@ -206,7 +247,26 @@ exports.appearFromCentre = (layer, animationDelay) ->
 		delay: animationDelay
 		curve: "spring(100,20,25)"
 
-	appearAnimation.start()
+	animation.start()
+
+
+# ---------------------------------------------------------------------------------------------
+# show layer with a delay
+# ---------------------------------------------------------------------------------------------
+exports.showWithDelay = (layer, animationDelay) ->
+
+	layer.bringToFront()
+
+	animation = new Animation
+		layer: layer
+		properties:
+			opacity: 1
+			scale: 1
+		delay: animationDelay
+		time: 0.2
+		curve: "ease-in-out"
+
+	animation.start()
 
 
 
