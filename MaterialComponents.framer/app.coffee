@@ -156,16 +156,10 @@ fab.on Events.Click, (event)->
 
 closeIcon.on Events.Click, (event)->
 	materialInteractions.animateIconBounds(closeIcon, materialColors.white)
-	materialInteractions.shrinkVertically(
-		card4.cardLayer,
-		card4.initialY, 
-		card4.initialHeight, 
-		0.2)
-	materialInteractions.shrinkHorizontally(
-		card4.cardLayer,
-		card4.initialX, 
-		card4.initialWidth, 
-		0.6)
+	materialInteractions.shrinkHorizontally(card4.cardLayer,0)
+	card4.cardLayer.on Events.AnimationEnd, ->
+		materialInteractions.shrinkVertically(card4.cardLayer,0.2)
+
 
 
 # --------------------------------------------------------------------------

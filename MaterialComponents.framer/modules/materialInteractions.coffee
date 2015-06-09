@@ -82,20 +82,19 @@ exports.expandHorizontally = (layer, animationDelay) ->
 # Shrink the layer horizontally to it's original size
 # Example use case: collapsing a card previously opened
 # ---------------------------------------------------------------------------------------------
-exports.shrinkHorizontally = (layer, newX, newWidth, animationDelay) ->
+exports.shrinkHorizontally = (layer, animationDelay) ->
 	
-	# define the animations 
-	animation = new Animation
-		layer: layer
-		properties:
-			width: newWidth
-			x: newX
+
+	layer.states.animationOptions = 
 		delay: animationDelay
 		time: 0.2
 		curve: "ease-in-out"
 
+	layer.states.switch("initialWidth")
+		
 	
-	animation.start()
+		
+	
 
 
 # ---------------------------------------------------------------------------------------------
@@ -122,20 +121,14 @@ exports.expandVertically = (layer, animationDelay) ->
 # Shrink the layer vertically to it's original size
 # Example use case: collapsing a card previously opened
 # ---------------------------------------------------------------------------------------------
-exports.shrinkVertically = (layer, newY, newHeight, animationDelay) ->
+exports.shrinkVertically = (layer, animationDelay) ->
 	
-	# define the animations 
-	animation = new Animation
-		layer: layer
-		properties:
-			height: newHeight
-			y: newY
+	layer.states.animationOptions = 
 		delay: animationDelay
 		time: 0.2
 		curve: "ease-in-out"
 
-	
-	animation.start()
+	layer.states.switch("initialHeight")
 
 
 # ---------------------------------------------------------------------------------------------

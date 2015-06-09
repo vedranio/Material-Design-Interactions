@@ -63,6 +63,49 @@ exports.card = (superLayer, initialColor, initialX, initialY, initialWidth, init
 		shadowColor: shadowColor
 		shadowBlur: shadowBlur
 		shadowSpread: shadowSpread
+
+	cardLayer.states.add
+		initiaWidthHeight:
+			backgroundColor: initialColor
+			x: initialX
+			y: initialY
+			width: initialWidth
+			height: initialHeight
+			borderRadius: initialBorderRadius
+			opacity: initialOpacity
+			scale: initialScale
+			superLayer: superLayer
+			shadowX: shadowX
+			shadowY: shadowY
+			shadowColor: shadowColor
+			shadowBlur: shadowBlur
+			shadowSpread: shadowSpread
+		initialWidth:
+			backgroundColor: initialColor
+			x: initialX
+			width: initialWidth
+			borderRadius: initialBorderRadius
+			opacity: initialOpacity
+			scale: initialScale
+			superLayer: superLayer
+			shadowX: shadowX
+			shadowY: shadowY
+			shadowColor: shadowColor
+			shadowBlur: shadowBlur
+			shadowSpread: shadowSpread
+		initialHeight:
+			backgroundColor: initialColor
+			y: initialY
+			height: initialHeight
+			borderRadius: initialBorderRadius
+			opacity: initialOpacity
+			scale: initialScale
+			superLayer: superLayer
+			shadowX: shadowX
+			shadowY: shadowY
+			shadowColor: shadowColor
+			shadowBlur: shadowBlur
+			shadowSpread: shadowSpread
 		
 
 	# The cardObject consists of the layer (the graphical representation of the card), and also stores it's initial geometry
